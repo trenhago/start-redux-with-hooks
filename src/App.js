@@ -1,25 +1,23 @@
 import TasksPage from './components/TasksPage';
 import './App.css';
 
-const mockTasks = [
-  {
-    id: 1,
-    title: 'Learn Redux',
-    description: 'The store, actions, and reducers, oh my!',
-    status: 'In Progress',
-  },
-  {
-    id: 2,
-    title: 'Peace on Earth',
-    description: 'No big deal.',
-    status: 'In Progress',
-  },
-];
+import { useSelector, useDispatch } from "react-redux";
+import { createTask } from "./actions";
 
 function App() {
+
+  const mockTasks = useSelector( state => state.tasks );
+  const dispatch = useDispatch();
+
+  const onCreateTask = ({ title, description}) => {
+    dispatch(createTask({ title, description }));
+  }
+
   return (
     <div className="main-content">
-      <TasksPage tasks={mockTasks} />
+      <TasksPage 
+        tasks={mockTasks}
+        onCreateTask={onCreateTask} />
     </div>
   );
 }
