@@ -4,11 +4,15 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import { createStore } from "redux";
+import { applyMiddleware, createStore, compose } from "redux";
 import { Provider } from "react-redux";
 import tasks from "./reducers";
 
-const store = createStore(tasks);
+import loggerMiddleware from './middleware/logger';
+
+const devtools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
+
+const store = createStore(tasks, compose(applyMiddleware(loggerMiddleware), devtools));
 
 ReactDOM.render(
   <React.StrictMode>
