@@ -4,15 +4,25 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import { applyMiddleware, createStore, compose } from "redux";
+import { applyMiddleware, createStore } from "redux";
 import { Provider } from "react-redux";
-import tasks from "./reducers";
+import tasksReducer from "./reducers";
 
 import loggerMiddleware from './middleware/logger';
 
-const devtools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
+import thunk from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
 
-const store = createStore(tasks, compose(applyMiddleware(loggerMiddleware), devtools));
+const middlewares = [thunk, loggerMiddleware];
+const middlewareEnhancer = applyMiddleware(...middlewares)
+
+const rootReducer = (state = {}, action) => {
+  return {
+    tasks:tasksReducer(state.tasks, action),
+  };
+};
+
+const store = createStore( rootReducer, composeWithDevTools(middlewareEnhancer));
 
 ReactDOM.render(
   <React.StrictMode>

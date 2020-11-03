@@ -68,3 +68,48 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  
+<br >
+
+# Setting up a server
+
+## Installing and configuring json-server
+
+First things first, install json-server globally by running the following command in a terminal window:
+
+```bash
+npm install --global json-server
+```
+
+Next create a db.json file in the root directory and add the contents shown in the following listing.
+
+```bash
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Learn Redux",
+      "description": "The store, actions, and reducers, oh my!",
+      "status": "Unstarted"
+    },
+    {
+      "id": 2,
+      "title": "Peace on Earth",
+      "description": "No big deal.",
+      "status": "Unstarted"
+    },
+    {
+      "id": 3,
+      "title": "Create Facebook for dogs",
+      "description": "The hottest new social network",
+      "status": "Completed"
+    }
+  ]
+}
+```
+
+Finally, start the server with the following command. Note that you’re specifying the server to run on port 3001, because the Create React App development server is already running on port 3000:
+
+```bash
+json-server --watch db.json --port 3001
+```
