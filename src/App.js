@@ -6,7 +6,6 @@ import { useSelector, useDispatch } from "react-redux";
 import FlashMessage from "./components/FlashMessage";
 
 function App(props) {
-  // let { tasks, isLoading, error } = useSelector(state => state.tasks);
   const { tasks, isLoading, error } = useSelector(state => state.tasks);
   const dispatch = useDispatch();
 
