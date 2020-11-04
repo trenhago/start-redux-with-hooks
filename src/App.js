@@ -1,11 +1,16 @@
+import { useEffect } from "react";
 import TasksPage from './components/TasksPage';
-import { createTask, editTask } from "./actions";
+import { createTask, editTask, fetchTasks } from "./actions";
 
 import { useSelector, useDispatch } from "react-redux";
 
 function App() {
   const mockTasks = useSelector(state => state.tasks);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchTasks());
+  }, [dispatch]);
 
   const onCreateTask = ({ title, description}) => {
     dispatch(createTask({ title, description}));
