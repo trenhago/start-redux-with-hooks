@@ -21,7 +21,7 @@ const TasksPage = props => {
 
     const resetForm = () => {
         setState({
-            ...state, 
+            ...state,
             showNewCardForm: false,
             title: '',
             description: '',
@@ -57,12 +57,20 @@ const TasksPage = props => {
         });
     }
 
+    if (props.isLoading) {
+        return (
+            <div className="tasks-loading">
+                <h1>Loading...</h1>
+            </div>
+        );
+    }
+
     return (
         <div className="tasks">
             <div className="tasks-header">
                 <button className="button button-default" onClick={toggleForm}>
                     + New task
-          </button>
+                        </button>
             </div>
 
             {state.showNewCardForm &&
@@ -83,7 +91,7 @@ const TasksPage = props => {
                     />
                     <button className="button" type="submit">
                         Save
-            </button>
+                            </button>
                 </form>}
 
             <div className="task-lists">

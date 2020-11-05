@@ -5,7 +5,7 @@ import { createTask, editTask, fetchTasks } from "./actions";
 import { useSelector, useDispatch } from "react-redux";
 
 function App() {
-  const mockTasks = useSelector(state => state.tasks);
+  const { tasks, isLoading} = useSelector(state => state.tasks);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -23,9 +23,10 @@ function App() {
   return (
     <div className="main-content">
       <TasksPage 
-        tasks={mockTasks} 
+        tasks={tasks} 
         onCreateTask={onCreateTask} 
-        onStatusChange={onStatusChange} />
+        onStatusChange={onStatusChange}
+        isLoading={isLoading} />
     </div>
   );
 }
