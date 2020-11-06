@@ -21,7 +21,7 @@ const TasksPage = props => {
 
     const resetForm = () => {
         setState({
-            ...state, 
+            ...state,
             showNewCardForm: false,
             title: '',
             description: '',
@@ -58,36 +58,43 @@ const TasksPage = props => {
     }
 
     return (
-        <div className="tasks">
-            <div className="tasks-header">
-                <button className="button button-default" onClick={toggleForm}>
-                    + New task
-          </button>
-            </div>
+        <div className="container">
+            {props.isLoading &&
+                <div className="tasks-loading">
+                    Loading...
+                </div>
+            }
+            <div className="tasks">
+                <div className="tasks-header">
+                    <button className="button button-default" onClick={toggleForm}>
+                        + New task
+                </button>
+                </div>
 
-            {state.showNewCardForm &&
-                <form className="new-task-form" onSubmit={onCreateTask}>
-                    <input
-                        className="full-width-input"
-                        onChange={onTitleChange}
-                        value={state.title}
-                        type="text"
-                        placeholder="title"
-                    />
-                    <input
-                        className="full-width-input"
-                        onChange={onDescriptionChange}
-                        value={state.description}
-                        type="text"
-                        placeholder="description"
-                    />
-                    <button className="button" type="submit">
-                        Save
-            </button>
-                </form>}
+                {state.showNewCardForm &&
+                    <form className="new-task-form" onSubmit={onCreateTask}>
+                        <input
+                            className="full-width-input"
+                            onChange={onTitleChange}
+                            value={state.title}
+                            type="text"
+                            placeholder="title"
+                        />
+                        <input
+                            className="full-width-input"
+                            onChange={onDescriptionChange}
+                            value={state.description}
+                            type="text"
+                            placeholder="description"
+                        />
+                        <button className="button" type="submit">
+                            Save
+                        </button>
+                    </form>}
 
-            <div className="task-lists">
-                {renderTaskLists()}
+                <div className="task-lists">
+                    {renderTaskLists()}
+                </div>
             </div>
         </div>
     );

@@ -1,26 +1,39 @@
+import { useEffect } from "react";
 import TasksPage from './components/TasksPage';
-import { createTask, editTask } from "./actions";
+import { createTask, editTask, fetchTasks } from "./actions";
 
 import { useSelector, useDispatch } from "react-redux";
+import FlashMessage from "./components/FlashMessage";
 
-function App() {
-  const mockTasks = useSelector(state => state.tasks);
+function App(props) {
+  const { tasks, isLoading, error } = useSelector(state => state.tasks);
   const dispatch = useDispatch();
 
-  const onCreateTask = ({ title, description}) => {
-    dispatch(createTask({ title, description}));
+  useEffect(
+    () => {
+      dispatch(fetchTasks())
+    }, [dispatch]);
+
+  const onCreateTask = ({ title, description }) => {
+    dispatch(createTask({ title, description }));
   }
 
   const onStatusChange = (id, status) => {
-    dispatch(editTask(id, { status}));
+    dispatch(editTask(id, { status }));
   }
 
   return (
-    <div className="main-content">
-      <TasksPage 
-        tasks={mockTasks} 
-        onCreateTask={onCreateTask} 
-        onStatusChange={onStatusChange} />
+    <div className="container">
+      {error &&
+        <FlashMessage message={error} />
+      }
+      <div className="main-content">
+        <TasksPage
+          tasks={tasks}
+          onCreateTask={onCreateTask}
+          onStatusChange={onStatusChange}
+          isLoading={isLoading} />
+      </div>
     </div>
   );
 }
