@@ -11,7 +11,7 @@ export function createTask({ title, description }) {
 
 export function editTask(id, params = {}) {
     return {
-        type: 'EDIT_TASK',
+        type: 'EDIT_TASK_STARTED',
         payload: {
             id,
             params

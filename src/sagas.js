@@ -1,15 +1,15 @@
-import { call, delay, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest, takeEvery } from 'redux-saga/effects';
 import * as api from './api';
 
 export default function* rootSaga() {
    yield takeLatest('FETCH_TASKS_STARTED', fetchTasks);
-   yield takeLatest('CREATE_TASK_STARTED', createTasks);
+   yield takeLatest('CREATE_TASK_STARTED', createTask);
+   yield takeEvery('EDIT_TASK_STARTED', editTask);
 }
 
 function* fetchTasks() {
    try {
       const { data } = yield call(api.fetchTasks);
-      yield delay(2000);
       yield put({
          type: 'FETCH_TASKS_SUCCEEDED',
          payload: { tasks: data },
@@ -22,12 +22,11 @@ function* fetchTasks() {
    }
 }
 
-function* createTasks({ payload }) {
+function* createTask({ payload }) {
    try {
       const { data } = yield call(
          api.createTask, payload
       );
-      console.log( data );
       yield put({
          type: 'CREATE_TASK_SUCCEEDED',
          payload: { task: data  },
@@ -35,6 +34,23 @@ function* createTasks({ payload }) {
    } catch (e) {
       yield put({
          type: 'CREATE_TASK_FAILED',
+         payload: { error: e.message },
+      });
+   }
+}
+
+function* editTask({ payload }) {
+   try {
+      const { data } = yield call(
+         api.editTask, payload.id, payload.params
+      );
+      yield put({
+         type: 'EDIT_TASK_SUCCEEDED',
+         payload: { task: data },
+      });
+   } catch (e) {
+      yield put({
+         type: 'EDIT_TASK_FAILED',
          payload: { error: e.message },
       });
    }

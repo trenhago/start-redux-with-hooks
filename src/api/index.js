@@ -18,5 +18,5 @@ export function createTask(params) {
 }
 
 export function editTask(id, params) {
-    return axios.put(`${API_BASE_URL}/tasks/${id}`, params);
+    return axios.patch(`${API_BASE_URL}/tasks/${id}`, params);
 }

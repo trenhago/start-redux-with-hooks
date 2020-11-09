@@ -47,6 +47,12 @@ export default function tasks(state = initialState, action) {
         };
     }
 
+    if (action.type === 'EDIT_TASK_STARTED') {
+        return {
+            ...state,
+        }
+    }
+
     if (action.type === 'EDIT_TASK_SUCCEEDED') {
         const { payload } = action;
         const nextTasks = state.tasks.map(task => {
@@ -58,6 +64,13 @@ export default function tasks(state = initialState, action) {
         return {
             ...state,
             tasks: nextTasks,
+        };
+    }
+
+    if (action.type === 'EDIT_TASK_FAILED') {
+        return {
+            ...state,
+            error: action.payload.error,
         };
     }
 
